@@ -4,6 +4,8 @@ import Home from "./containers/Home";
 import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";
 import Signup from "./containers/Signup";
+import NewNote from "./containers/NewNote";
+import Notes from "./containers/Notes";
 
 export default function Routes() {
   return (
@@ -18,6 +20,14 @@ export default function Routes() {
 
         <Route exact path="/signup">
           <Signup />
+        </Route>
+
+        <Route exact path="/notes/new">
+          <NewNote />
+        </Route>
+
+        <Route exact path="/notes/:id">
+          <Notes />
         </Route>
 
         <Route>

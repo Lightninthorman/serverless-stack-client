@@ -49,7 +49,7 @@ function App() {
 
             <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
                 <Navbar.Brand >
-                    <Link to="/">Scratch</Link>
+                    <Link to="/" className="h4">Scratch</Link>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">

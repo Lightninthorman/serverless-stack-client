@@ -1,3 +1,8 @@
 .navbar{
     font-weight: bold;
 }
+
+.navbar-brand a{
+    color:#666;
+    font-weight: bold;
+}
