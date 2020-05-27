@@ -34,7 +34,8 @@ function App() {
         setIsAuthenticating(false);
     }
 
-    async function handleLogout() {
+    async function handleLogout(e) {
+        e.preventDefault();
       await Auth.signOut();
 
       userHasAuthenticated(false);
@@ -55,16 +56,28 @@ function App() {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ml-auto">
                         {isAuthenticated
-                            ? <Nav.Item onClick={handleLogout}>Logout</Nav.Item>
+                            ? <>
+                                  <Nav.Item >
+
+                                    <Nav.Link  eventKey="1" as={Link} to="/settings">Settings</Nav.Link>
+
+                                  </Nav.Item>
+                                  <Nav.Item >
+
+                                    <Nav.Link  eventKey="4" as={Link} onClick={handleLogout} to="#">Logout</Nav.Link>
+
+                                  </Nav.Item>
+
+                              </>
                             : <>
                                 <Nav.Item >
 
-                                    <Nav.Link  eventKey="1" as={Link} to="/signup">Signup</Nav.Link>
+                                    <Nav.Link  eventKey="2" as={Link} to="/signup">Signup</Nav.Link>
 
                                 </Nav.Item>
                                 <Nav.Item >
 
-                                    <Nav.Link  eventKey="2" as={Link} to="/login">Login</Nav.Link>
+                                    <Nav.Link  eventKey="3" as={Link} to="/login">Login</Nav.Link>
 
                                 </Nav.Item>
                             </>

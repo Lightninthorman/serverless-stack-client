@@ -1,5 +1,6 @@
 export default {
   MAX_ATTACHMENT_SIZE: 5000000,
+  STRIPE_KEY: "pk_test_LfT7ZA79i1SjPkobRXdVaOqL004bXc4UPT",
   s3: {
     REGION: "us-east-1",
     BUCKET: "thor-notes-app-uploads"

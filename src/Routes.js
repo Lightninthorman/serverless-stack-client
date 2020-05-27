@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./containers/Home";
 import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";
+import Settings from "./containers/Settings";
 import Signup from "./containers/Signup";
 import NewNote from "./containers/NewNote";
 import Notes from "./containers/Notes";
@@ -21,6 +22,10 @@ export default function Routes() {
         <Route exact path="/signup">
           <Signup />
         </Route>
+
+        <Route exact path="/settings">
+          <Settings />
+        </Route>        
 
         <Route exact path="/notes/new">
           <NewNote />
