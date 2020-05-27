@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useAppContext } from "../libs/contextLib";
-import { useHistory } from "react-router-dom";
 import { onError } from "../libs/errorLib";
 import { useFormFields } from "../libs/hooksLib";
 import { Form, FormGroup, FormControl } from "react-bootstrap";
@@ -12,8 +11,6 @@ import LoaderButton from "../components/LoaderButton";
 
 
 export default function Login() {
-
-  const history = useHistory();
 
   const { userHasAuthenticated } = useAppContext();
   // const [email, setEmail] = useState("");
@@ -36,7 +33,6 @@ export default function Login() {
     try {
       await Auth.signIn(fields.email, fields.password);
       userHasAuthenticated(true);
-      history.push("/");
     } catch (e) {
       onError(e);
       setIsLoading(false);

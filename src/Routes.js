@@ -1,5 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import Home from "./containers/Home";
 import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";
@@ -15,25 +17,25 @@ export default function Routes() {
             <Home />
         </Route>
 
-        <Route exact path="/Login">
+        <UnauthenticatedRoute exact path="/Login">
             <Login />
-        </Route>
+        </UnauthenticatedRoute>
 
-        <Route exact path="/signup">
+        <UnauthenticatedRoute exact path="/signup">
           <Signup />
-        </Route>
+        </UnauthenticatedRoute>
 
-        <Route exact path="/settings">
+        <AuthenticatedRoute exact path="/settings">
           <Settings />
-        </Route>        
+        </AuthenticatedRoute>
 
-        <Route exact path="/notes/new">
+        <AuthenticatedRoute exact path="/notes/new">
           <NewNote />
-        </Route>
+        </AuthenticatedRoute>
 
-        <Route exact path="/notes/:id">
+        <AuthenticatedRoute exact path="/notes/:id">
           <Notes />
-        </Route>
+        </AuthenticatedRoute>
 
         <Route>
             <NotFound />
