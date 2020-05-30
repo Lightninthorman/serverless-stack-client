@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import { API, Storage } from "aws-amplify";
 import { s3Upload, s3Delete } from "../libs/awsLib";
 import { onError } from "../libs/errorLib";
@@ -14,9 +14,12 @@ export default function Notes() {
     const history = useHistory();
     const [note, setNote] = useState(null);
     const [content, setContent] = useState("");
+    const [tagChoice, setTagChoice] = useState(["","","",]);
+    const [tags, setTags] = useState(["","",""])
     const [isLoading, setIsLoading] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
 
+    let location = useLocation();
 
     useEffect(() => {
       function loadNote() {
@@ -26,7 +29,7 @@ export default function Notes() {
       async function onLoad() {
         try {
           const note = await loadNote();
-          const { content, attachment } = note;
+          const { content, attachment, tags } = note;
 
           if (attachment) {
             note.attachmentURL = await Storage.vault.get(attachment);
@@ -34,6 +37,8 @@ export default function Notes() {
           }
 
           setContent(content);
+          setTagChoice(tags);
+          setTags(tags);
           setNote(note);
         } catch (e) {
           onError(e);
@@ -41,6 +46,7 @@ export default function Notes() {
       }
 
       onLoad();
+      console.log(tags);
     }, [id]);
 
     function validateForm() {
@@ -91,6 +97,7 @@ export default function Notes() {
 
         await saveNote({
           content,
+          tags,
           attachment: attachment || note.attachment
         });
         history.push("/");
@@ -133,6 +140,33 @@ export default function Notes() {
       }
     }
 
+    function tagYoureIt(e, index){
+        let newTag = e.target.value;
+        newTag = newTag.toLowerCase();
+        // console.log("choice", newTag);
+        let tagList = [...tagChoice]
+
+        tagList[index] = newTag;
+        // console.log("tag list", tagList);
+
+        setTagChoice(tagList);
+
+        if(newTag !== "- custom -"){
+            let myTags = [...tags];
+            myTags[index]= newTag
+            setTags(myTags);
+        }
+    }
+
+    function handleCustomTag(e,index){
+         let newTag = e.target.value;
+        let tagList = [...tags];
+        tagList[index] = newTag.toLowerCase();
+         // console.log(tagList);
+        setTags(tagList);
+
+    }
+
     return (
       <div className="Notes">
         {note && (
@@ -143,6 +177,25 @@ export default function Notes() {
                 as="textarea"
                 onChange={e => setContent(e.target.value)}
               />
+            </Form.Group>
+            <Form.Group controlId="tags">
+                <Form.Label>Tags</Form.Label>
+                {tagChoice.map((tag, i) =>
+                    <div key={i} className="mb-2">
+                      <Form.Control as="select" value={tag} onChange={e => tagYoureIt(e,i)}>
+
+                        {
+                            location.state.allTags.map((aTag,index)=>
+                            <option key={index}>{aTag}</option>
+                        )
+                        }
+                      </Form.Control>
+                      {tagChoice[i] == "- custom -" ?
+                      <Form.Control type="text" autoFocus placeholder="enter new tag" onChange={e => handleCustomTag(e,i)} />
+                      : ""}
+                    </div>
+                    )
+                }
             </Form.Group>
             {note.attachment && (
               <Form.Group>

@@ -45,9 +45,8 @@ function App() {
     return (
 
         !isAuthenticating &&
-        <Container>
 
-
+        <>
             <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
                 <Navbar.Brand >
                     <Link to="/" className="h4">Scratch</Link>
@@ -85,12 +84,13 @@ function App() {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
+            <Container>
+                <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
+                    <Routes />
+                </AppContext.Provider>
 
-            <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
-                <Routes />
-            </AppContext.Provider>
-
-        </Container>
+            </Container>
+        </>
     );
 }
 

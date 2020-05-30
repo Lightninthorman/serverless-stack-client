@@ -36,3 +36,49 @@
 .Home .notes a {
   color: #666;
 }
+
+.Home .notes-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.Home .note {
+    margin: 5px 0;
+    padding: 10px;
+    width: 100%;
+    height: 150px;
+    border: 1px solid grey;
+    background-color: #FEF263;
+    filter: drop-shadow(3px 3px 4px grey);
+}
+
+.Home .tag{
+    margin: 3px 3px;
+    padding: 0 4px;
+    border-radius: 3px;
+    background: lightgrey;
+}
+
+.Home .create-note{
+    height:100px;
+}
+
+@media all and (min-width: 510px) {
+  .Home .notes-container {
+      flex-flow: row wrap;
+      justify-content: center;
+
+  }
+
+  .Home .note {
+      width: 30%;
+      min-width: 230px;
+      height: 200px;
+      margin: 5px 5px;
+  }
+
+  .Home .create-note{
+      height:200px;
+  }
+}

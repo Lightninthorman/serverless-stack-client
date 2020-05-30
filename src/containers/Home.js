@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ListGroup } from "react-bootstrap";
+// import { ListGroup, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { API } from "aws-amplify";
 import { useAppContext } from "../libs/contextLib";
@@ -9,8 +9,12 @@ import "./Home.css";
 
 export default function Home() {
   const [notes, setNotes] = useState([]);
+  const [allTags, setAllTags] = useState([]);
   const { isAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
+
+  // let searchNotes = [...notes];
+
 
   useEffect(() => {
     async function onLoad() {
@@ -21,15 +25,37 @@ export default function Home() {
       try {
         const notes = await loadNotes();
         setNotes(notes);
+
+        const tagList = await createAllTags(notes);
+        setAllTags(tagList);
+
       } catch (e) {
         onError(e);
       }
-
       setIsLoading(false);
+      // console.log(allTags);
     }
 
     onLoad();
   }, [isAuthenticated]);
+
+  function createAllTags(allNotes){
+      let tagsArray = ["","- custom -","shopping", "groceries", "birthday"];
+      let tagList =[];
+      allNotes.map((note,i)=>{
+      tagList = [...tagList, ...note.tags];
+      // console.log("Here" ,note.tags);
+     })
+     // console.log(tagList);
+     tagList = tagList.sort()
+     tagsArray = [...tagsArray, ...tagList]
+     // console.log(tagList);
+      const removeDuplicates = new Set(tagsArray);
+      const cleanTagsArray = [...removeDuplicates]
+      // console.log(cleanTagsArray);
+      return cleanTagsArray
+
+  }
 
   function loadNotes() {
     return API.get("notes", "/notes");
@@ -38,17 +64,28 @@ export default function Home() {
   function renderNotesList(notes) {
     return [{}].concat(notes).map((note, i) =>
       i !== 0 ? (
-          <ListGroup.Item as={Link} key={note.noteId} to={`/notes/${note.noteId}`} >
-            <h4>{note.content.trim().split("\n")[0]}</h4>
-            {"Created: " + new Date(note.createdAt).toLocaleString()}
-          </ListGroup.Item>
+          <Link  to={{pathname:`/notes/${note.noteId}`, state:{allTags:allTags}}} key={note.noteId} className="note d-flex justify-content-between flex-column">
+            <div>
+                <h4>{note.content.trim().split("\n")[0]}</h4>
+                <p>{"Created: " + new Date(note.createdAt).toLocaleString()}</p>
+            </div>
+
+            <div className="d-flex justify-content-start flex-wrap">
+                {note.tags.map((tag, index)=>
+                    tag ?
+                    <p key={index} className="tag">{tag}</p>
+                    :
+                    ""
+                )}
+            </div>
+          </Link>
 
       ) : (
-          <ListGroup.Item as={Link} key="new" to="/notes/new">
+            <Link to={{pathname:"/notes/new", state:{allTags:allTags}}} key="new"  className="create-note note">
             <h4>
-              <b>{"\uFF0B"}</b> Create a new note
+              <b>{"\uFF0B"}</b> New Note
             </h4>
-          </ListGroup.Item>
+            </Link>
 
       )
     );
@@ -64,12 +101,13 @@ export default function Home() {
   }
 
   function renderNotes() {
+
     return (
-      <div className="notes">
+      <div className="notes" >
         <h1 className="display-4">Your Notes</h1>
-        <ListGroup>
-          {!isLoading && renderNotesList(notes)}
-        </ListGroup>
+            <div className="notes-container ">
+              {!isLoading && renderNotesList(notes)}
+            </div>
       </div>
     );
   }
