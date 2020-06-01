@@ -46,7 +46,6 @@ export default function Notes() {
       }
 
       onLoad();
-      console.log(tags);
     }, [id]);
 
     function validateForm() {
@@ -190,7 +189,7 @@ export default function Notes() {
                         )
                         }
                       </Form.Control>
-                      {tagChoice[i] == "- custom -" ?
+                      {tagChoice[i] === "- custom -" ?
                       <Form.Control type="text" autoFocus placeholder="enter new tag" onChange={e => handleCustomTag(e,i)} />
                       : ""}
                     </div>

@@ -4,16 +4,19 @@ import { Link } from "react-router-dom";
 import { API } from "aws-amplify";
 import { useAppContext } from "../libs/contextLib";
 import { onError } from "../libs/errorLib";
+import  Search from "../components/Search"
 import "./Home.css";
 
 
 export default function Home() {
   const [notes, setNotes] = useState([]);
   const [allTags, setAllTags] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   const { isAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
 
-  // let searchNotes = [...notes];
+
+
 
 
   useEffect(() => {
@@ -33,7 +36,7 @@ export default function Home() {
         onError(e);
       }
       setIsLoading(false);
-      // console.log(allTags);
+
     }
 
     onLoad();
@@ -43,7 +46,7 @@ export default function Home() {
       let tagsArray = ["","- custom -","shopping", "groceries", "birthday"];
       let tagList =[];
       allNotes.map((note,i)=>{
-      tagList = [...tagList, ...note.tags];
+      return tagList = [...tagList, ...note.tags];
       // console.log("Here" ,note.tags);
      })
      // console.log(tagList);
@@ -62,9 +65,16 @@ export default function Home() {
   }
 
   function renderNotesList(notes) {
-    return [{}].concat(notes).map((note, i) =>
+      let noteData;
+      if(searchResults[0]){
+          noteData = searchResults;
+      }else{
+          noteData = notes;
+      }
+
+    return [{}].concat(noteData).map((note, i) =>
       i !== 0 ? (
-          <Link  to={{pathname:`/notes/${note.noteId}`, state:{allTags:allTags}}} key={note.noteId} className="note d-flex justify-content-between flex-column">
+          <Link  to={{pathname:`/notes/${note.noteId}`, state:{allTags:allTags}}} key={note.noteId} className=" note d-flex justify-content-between flex-column">
             <div>
                 <h4>{note.content.trim().split("\n")[0]}</h4>
                 <p>{"Created: " + new Date(note.createdAt).toLocaleString()}</p>
@@ -105,6 +115,11 @@ export default function Home() {
     return (
       <div className="notes" >
         <h1 className="display-4">Your Notes</h1>
+            <Search notes={notes}
+            searchResults={searchResults}
+            setSearchResults={setSearchResults}
+            allTags={allTags}
+             />
             <div className="notes-container ">
               {!isLoading && renderNotesList(notes)}
             </div>

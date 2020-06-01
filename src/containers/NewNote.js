@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { useHistory, Link, useLocation } from "react-router-dom";
 import { onError } from "../libs/errorLib";
 import { s3Upload } from "../libs/awsLib";
@@ -111,7 +111,7 @@ export default function NewNote(props) {
                 )
                 }
               </Form.Control>
-              {tagChoice[i] == "- custom -" ?
+              {tagChoice[i] === "- custom -" ?
               <Form.Control type="text" autoFocus placeholder="enter new tag" onChange={e => handleCustomTag(e,i)} />
               : ""}
             </div>
