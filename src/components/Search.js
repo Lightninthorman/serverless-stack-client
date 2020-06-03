@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
+import "./Search.css";
 
-export default function Search({ notes, searchResults, setSearchResults, allTags, ...props}){
+export default function Search({ notes, searchTags, setSearchResults, allTags, ...props}){
 
     const [searchChoices, setSearchChoices] = useState([]);
 
@@ -23,26 +24,41 @@ export default function Search({ notes, searchResults, setSearchResults, allTags
             return searchArray.every(item => note.tags.includes(item));
         })
 
+        if(!noteMatches[0]){
+            noteMatches = [1]
+        }
+
         setSearchResults(noteMatches);
+
+
+
+
+
     }
 
     return (
-        <Form>
-            <Form.Group controlId="tagSearch">
-                <Form.Label>Search Tags</Form.Label>
-                {allTags.map((tag, i)=>
-                    tag === "- custom -" || tag === "" ? "":
-                    <Form.Check
-                    type="checkbox"
-                    key={i}
-                    id={tag}
-                    value={tag}
-                    label={tag}
-                    onChange={handleSearch}
-                    />
+        <div className="searchContainer py-2 px-3 my-2">
+            <Form>
+                <Form.Group controlId="tagSearch">
+                    <Form.Label>Search Tags</Form.Label>
+                    <div className="d-flex flex-wrap">
+                    {searchTags.map((tag, i)=>
+                        tag === "- custom -" || tag === "" ? "":
+                        <Form.Check
+                        type="switch"
+                        key={i}
+                        id={tag}
+                        value={tag}
+                        label={tag}
+                        className="mr-3 switch"
+                        onChange={handleSearch}
+                        />
 
-                )}
-            </Form.Group>
-        </Form>
+
+                    )}
+                    </div>
+                </Form.Group>
+            </Form>
+        </div>
     )
 };

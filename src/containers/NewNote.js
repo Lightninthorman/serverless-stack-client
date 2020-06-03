@@ -91,7 +91,7 @@ export default function NewNote(props) {
 
   return (
     <div className="NewNote">
-      <form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <Form.Group controlId="content">
           <Form.Control
             value={content}
@@ -138,7 +138,7 @@ export default function NewNote(props) {
                 Cancel
             </Link>
           </div>
-      </form>
+      </Form>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useParams, useHistory, useLocation } from "react-router-dom";
+import { useParams, useHistory, useLocation, Link } from "react-router-dom";
 import { API, Storage } from "aws-amplify";
 import { s3Upload, s3Delete } from "../libs/awsLib";
 import { onError } from "../libs/errorLib";
@@ -214,25 +214,32 @@ export default function Notes() {
               {!note.attachment && <Form.Label>Attachment</Form.Label>}
               <Form.Control onChange={handleFileChange} type="file" />
             </Form.Group>
-            <LoaderButton
-              block
-              type="submit"
-              size="lg"
-              variant="primary"
-              isLoading={isLoading}
-              disabled={!validateForm()}
-            >
-              Save
-            </LoaderButton>
-            <LoaderButton
-              block
-              size="lg"
-              variant="danger"
-              onClick={handleDelete}
-              isLoading={isDeleting}
-            >
-              Delete
-            </LoaderButton>
+            <div className="d-flex flex-column align-items-center">
+                <LoaderButton
+                  block
+                  className="w-50"
+                  type="submit"
+                  size="lg"
+                  variant="primary"
+                  isLoading={isLoading}
+                  disabled={!validateForm()}
+                >
+                  Save
+                </LoaderButton>
+                <LoaderButton
+                  block
+                  className="w-50"
+                  size="lg"
+                  variant="danger"
+                  onClick={handleDelete}
+                  isLoading={isDeleting}
+                >
+                  Delete
+                </LoaderButton>
+                <Link to="/" className="btn btn-secondary w-50 mt-2">
+                    Cancel
+                </Link>
+            </div>
           </Form>
         )}
       </div>

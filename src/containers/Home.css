@@ -3,6 +3,11 @@
   text-align: center;
 }
 
+.Home  a:hover {
+  text-decoration: none;
+  filter:drop-shadow(0 0 7px firebrick);
+}
+
 .Home .lander h1 {
   font-family: "Open Sans", sans-serif;
   font-weight: 600;
@@ -60,8 +65,16 @@
     background: lightgrey;
 }
 
+.Home .tag:hover{
+    text-decoration: none;
+}
+
 .Home .create-note{
     height:100px;
+}
+
+.Home .no-results{
+    padding: 20px;
 }
 
 @media all and (min-width: 510px) {
