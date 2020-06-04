@@ -89,7 +89,6 @@ export default function Notes() {
 //***My own attempt at removing from s3, if there are issues this would be the best place to look first!!
             if(note.attachment){
                 let deleted = await s3Delete(note.attachment);
-                console.log(deleted);
             }
 
         }
@@ -129,7 +128,6 @@ export default function Notes() {
 //*** Another spot where I may have broken the app
         if(note.attachment){
             let success = await s3Delete(note.attachment);
-            console.log(success);
         }
 
         history.push("/");
@@ -142,11 +140,9 @@ export default function Notes() {
     function tagYoureIt(e, index){
         let newTag = e.target.value;
         newTag = newTag.toLowerCase();
-        // console.log("choice", newTag);
         let tagList = [...tagChoice]
 
         tagList[index] = newTag;
-        // console.log("tag list", tagList);
 
         setTagChoice(tagList);
 
@@ -161,7 +157,6 @@ export default function Notes() {
          let newTag = e.target.value;
         let tagList = [...tags];
         tagList[index] = newTag.toLowerCase();
-         // console.log(tagList);
         setTags(tagList);
 
     }

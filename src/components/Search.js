@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import "./Search.css";
 
-export default function Search({ notes, searchTags, setSearchResults, allTags, ...props}){
+export default function Search({ notes, searchTags, setSearchResults,  ...props}){
 
     const [searchChoices, setSearchChoices] = useState([]);
 

@@ -49,9 +49,7 @@ export default function Home() {
       let tagList =["","- custom -"];
       allNotes.map((note,i)=>{
           return tagList = [...tagList, ...note.tags];
-          // console.log("Here" ,note.tags);
      })
-     // console.log(tagList);
      tagList = tagList.sort()
      tagsArray = [...tagsArray, ...tagList]
      if (tagList.every(tag => tag === "")) {
@@ -59,11 +57,9 @@ export default function Home() {
      }else{
          setShowSearch(true);
      }
-     // console.log(tagList);
       const removeDuplicates = new Set(tagsArray);
       const cleanTagsArray = [...removeDuplicates]
       setSearchTags(cleanTagsArray);
-      // console.log(cleanTagsArray);
       return cleanTagsArray
 
   }
@@ -82,7 +78,6 @@ export default function Home() {
       let noteData;
       if(searchResults[0]){
           noteData = searchResults;
-          // console.log(searchResults);
       }else{
           noteData = notes;
       }
@@ -137,7 +132,6 @@ export default function Home() {
             {showSearch ? <Search notes={notes}
             searchTags={searchTags}
             setSearchResults={setSearchResults}
-            allTags={allTags}
              />
              : ""
             }

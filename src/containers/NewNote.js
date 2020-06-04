@@ -63,11 +63,9 @@ export default function NewNote(props) {
   function tagYoureIt(e, index){
       let newTag = e.target.value;
       newTag = newTag.toLowerCase();
-      // console.log("choice", newTag);
       let tagList = [...tagChoice]
 
       tagList[index] = newTag;
-      // console.log("tag list", tagList);
 
       setTagChoice(tagList);
 
@@ -82,7 +80,6 @@ export default function NewNote(props) {
        let newTag = e.target.value;
       let tagList = [...tags];
       tagList[index] = newTag.toLowerCase();
-       // console.log(tagList);
       setTags(tagList);
 
   }
