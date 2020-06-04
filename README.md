@@ -1,3 +1,13 @@
+This project was created with from the [serverless stack guide](https://serverless-stack.com/chapters/who-is-this-guide-for.html) that helped teach me a lot about building a full stack serverless app. This was a very interesting topic/project, and something I look forward to digging into deeper. 
+
+I added a little bit extra styling to the project and included the ability to add tags to your notes. You can filter the notes by clicking on a tag on one of the notes or by selecting one or more tags in the search window. 
+
+### Issues:
+The search function was somewhat challenging because I wanted the ability to continue to narrow the search as more tag filters were clicked and I didn't know much about how to do that. I experimented a lot and found a helpful post that led me to the use of every() and includes() methods.
+
+The next issue was getting the tags displayed in each note on the home page to also act as a way of filtering. I tried and failed a lot of times with this one. I couldn't get the filter switch to switch on when a tag was clicked. I was setting the checked value to "checked" and thought that the onChange event would fire, but nope. Finally, I tried simulating a click with the click() method and it worked! It sounds so obvious, but I was stuck on changing the checked value. Sometimes a night or two of good sleep can be very helpful.
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
